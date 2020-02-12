@@ -8,15 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class LoginResponse {
+@AllArgsConstructor
+public class Login {
 
     @SerializedName("username")
     @Expose
     private String username;
-    @SerializedName("token")
+    @SerializedName("password")
     @Expose
-    private String token;
-
+    private String password;
 }

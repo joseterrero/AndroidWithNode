@@ -1,5 +1,9 @@
 package com.joseterrero.basicloginapp.retrofit.generator;
 
+import com.joseterrero.basicloginapp.common.Utilidades;
+import com.joseterrero.basicloginapp.retrofit.services.LoginService;
+import com.joseterrero.basicloginapp.retrofit.services.RegisterService;
+
 import java.io.IOException;
 
 import okhttp3.Credentials;
@@ -12,68 +16,42 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
-    private static final String BASE_URL = "http://10.0.2.2:3000/api";
 
-
-    private static Retrofit retrofit = null;
+    private static ServiceGenerator serviceGenerator = null;
+    private LoginService loginService;
+    private RegisterService registerService;
+    private Retrofit retrofit;
 
     private static HttpLoggingInterceptor logging =
             new HttpLoggingInterceptor()
                     .setLevel(HttpLoggingInterceptor.Level.BODY);
 
-
-    private static Retrofit.Builder builder =
-            new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create());
-
-    private static Autenticacion tipoActual = null;
-
-
     private static OkHttpClient.Builder httpClientBuilder =
-            new OkHttpClient.Builder();
+            new OkHttpClient.Builder().addInterceptor(logging);
 
-
-
-
-    public static <S> S createService(Class<S> serviceClass, String username, String password) {
-        if (!(username.isEmpty() || password.isEmpty())) {
-            String credentials = Credentials.basic(username, password);
-            return createService(serviceClass, credentials, Autenticacion.BASIC);
-        }
-        return createService(serviceClass, null, Autenticacion.SIN_AUTENTICACION);
+    public ServiceGenerator(){
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Utilidades.BASE_URL)
+                .client(httpClientBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        loginService = retrofit.create(LoginService.class);
+        registerService = retrofit.create(RegisterService.class);
     }
 
-    public static <S> S createService(Class<S> serviceClass, final String authtoken, final Autenticacion tipo) {
-
-        if (retrofit == null) {
-
-            httpClientBuilder.interceptors().clear();
-
-            httpClientBuilder.addInterceptor(logging);
-
-            // Interceptor que añade dos encabezados
-            httpClientBuilder.addInterceptor(new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    Request original = chain.request();
-
-                    Request request = original.newBuilder()
-                            .header("User-Agent", "LoginApp")
-                            .header("Accept", "application/json")
-                            .method(original.method(), original.body())
-                            .build();
-
-                    return chain.proceed(request);
-                }
-            });
-
-
-            builder.client(httpClientBuilder.build());
-            retrofit = builder.build();
+    public static ServiceGenerator getInstance(){
+        if(serviceGenerator==null){
+            serviceGenerator = new ServiceGenerator();
         }
+        return serviceGenerator;
+    }
 
-        return retrofit.create(serviceClass);
+    public LoginService getLoginService(){
+        return loginService;
+    }
+
+    public RegisterService getRegisterService() {
+        return registerService;
     }
 
 }
