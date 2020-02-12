@@ -6,5 +6,4 @@
     <string name="hint_password">Contraseña</string>
     <string name="hint_email">Email</string>
     <string name="hint_password2">Repetir Contraseña</string>
-    <string name="text_register">Registrarse</string>
 </resources>
