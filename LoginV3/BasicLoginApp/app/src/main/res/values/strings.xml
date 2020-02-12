@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">BasicLoginApp</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="text_register">Registrarse</string>
+    <string name="hint_username">Nombre Usuario</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password2">Repetir Contraseña</string>
+    <string name="text_register">Registrarse</string>
+</resources>
