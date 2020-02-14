@@ -16,6 +16,7 @@ import com.joseterrero.basicloginapp.model.Registro;
 import com.joseterrero.basicloginapp.retrofit.generator.ServiceGenerator;
 import com.joseterrero.basicloginapp.retrofit.services.RegisterService;
 
+import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,23 +74,24 @@ public class RegisterActivity extends AppCompatActivity {
                     Call<RegisterResponse> call = service.doRegister(registro);
 
                     call.enqueue(new Callback<RegisterResponse>() {
+                        @SneakyThrows
                         @Override
                         public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                             if (response.code() != 200) {
                                 Log.e("response", String.valueOf(response.code()));
                                 // error
-                                Log.e("RequestError", response.message());
-                                Toast.makeText(RegisterActivity.this, "Error de petición", Toast.LENGTH_SHORT).show();
+                                Log.e("RequestError", response.errorBody().string());
+                                Toast.makeText(RegisterActivity.this, response.errorBody().string(), Toast.LENGTH_SHORT).show();
                             } else if (response.code() == 450) {
                                 Log.e("response", String.valueOf(response.code()));
                                 // error
-                                Log.e("RequestError", response.message());
-                                Toast.makeText(RegisterActivity.this, "La contraseña es muy corta", Toast.LENGTH_SHORT).show();
+                                Log.e("RequestError", response.errorBody().string());
+                                Toast.makeText(RegisterActivity.this, response.errorBody().string(), Toast.LENGTH_SHORT).show();
                             } else if (response.code() == 451) {
                                 Log.e("response", String.valueOf(response.code()));
                                 // error
-                                Log.e("RequestError", response.message());
-                                Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                                Log.e("RequestError", response.errorBody().string());
+                                Toast.makeText(RegisterActivity.this, response.errorBody().string(), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(RegisterActivity.this, "Usuario Correcto", Toast.LENGTH_SHORT).show();
                                 // exito
@@ -104,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<RegisterResponse> call, Throwable t) {
                             Log.e("NetworkFailure", t.getMessage());
-                            Toast.makeText(RegisterActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
