@@ -13,11 +13,9 @@ import android.widget.Toast;
 
 import com.joseterrero.basicloginapp.model.Login;
 import com.joseterrero.basicloginapp.model.LoginResponse;
-import com.joseterrero.basicloginapp.model.User;
 import com.joseterrero.basicloginapp.retrofit.generator.ServiceGenerator;
 import com.joseterrero.basicloginapp.retrofit.services.LoginService;
 
-import okhttp3.Credentials;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-        etUsername = findViewById(R.id.textViewPassword);
+        etUsername = findViewById(R.id.textViewUsername);
         etPassword = findViewById(R.id.textViewPassword);
         btnLogin = findViewById(R.id.buttonLogin);
         tvRegister = findViewById(R.id.textViewRegister);
@@ -89,11 +87,6 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(MainActivity.this, "Usuario Correcto", Toast.LENGTH_SHORT).show();
                                 // exito
-/*                            Intent i = new Intent(MainActivity.this, ListaActivity.class);
-                            i.putExtra("username", username);
-                            i.putExtra("password", pass);
-                            startActivity(i);
- */
                                 Toast.makeText(MainActivity.this, "Entramos en la página", Toast.LENGTH_SHORT).show();
                             }
                         }
