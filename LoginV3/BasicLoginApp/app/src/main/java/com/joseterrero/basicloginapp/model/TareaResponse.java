@@ -26,8 +26,8 @@ public class TareaResponse {
     private String body;
     @SerializedName("created_by")
     @Expose
-    private String createdBy;
+    private CreatedBy createdBy;
     @SerializedName("realized_by")
     @Expose
-    private String realizedBy;
+    private RealizedBy realizedBy;
 }
