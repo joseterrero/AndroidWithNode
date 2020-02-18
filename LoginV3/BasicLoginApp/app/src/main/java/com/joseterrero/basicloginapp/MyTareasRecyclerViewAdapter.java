@@ -16,14 +16,10 @@ public class MyTareasRecyclerViewAdapter extends RecyclerView.Adapter<MyTareasRe
 
     private final List<TareaResponse> mValues;
     private Context ctx;
-    private int layout;
-    private ITareaListener mListener;
 
-    public MyTareasRecyclerViewAdapter(List<TareaResponse> items, Context ctx, int layout, ITareaListener listener) {
+    public MyTareasRecyclerViewAdapter(List<TareaResponse> items, Context ctx) {
         mValues = items;
         this.ctx = ctx;
-        this.mListener = listener;
-        this.layout = layout;
     }
 
     @Override
@@ -36,11 +32,11 @@ public class MyTareasRecyclerViewAdapter extends RecyclerView.Adapter<MyTareasRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.tvTitle.setText(mValues.get(position).getTitle());
-        holder.tvCreatedAt.setText(mValues.get(position).getCreatedAt());
-        holder.tvBody.setText(mValues.get(position).getBody());
-        holder.tvCreatedBy.setText(mValues.get(position).getCreatedBy().getFullname());
-        holder.tvRealizedBy.setText(mValues.get(position).getRealizedBy().getFullname());
+        holder.tvTitle.setText(holder.mItem.getTitle());
+        holder.tvCreatedAt.setText(holder.mItem.getCreatedAt());
+        holder.tvBody.setText(holder.mItem.getBody());
+        holder.tvCreatedBy.setText(holder.mItem.getCreatedBy().getFullname());
+        holder.tvRealizedBy.setText(holder.mItem.getRealizedBy().getFullname());
 
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

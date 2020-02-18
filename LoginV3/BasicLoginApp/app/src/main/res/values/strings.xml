@@ -6,4 +6,8 @@
     <string name="hint_password">Contraseña</string>
     <string name="hint_email">Email</string>
     <string name="hint_password2">Repetir Contraseña</string>
+    <string name="button_newtask">Añadir Tarea</string>
+    <string name="title_newtask">Crear nueva tarea</string>
+    <string name="hint_description">Descripción</string>
+    <string name="hint_task_title">Titulo</string>
 </resources>

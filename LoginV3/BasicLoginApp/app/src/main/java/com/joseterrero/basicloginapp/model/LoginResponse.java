@@ -18,11 +18,7 @@ public class LoginResponse {
     @SerializedName("token")
     @Expose
     private String token;
-    private String password;
-
-    public LoginResponse(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
+    @SerializedName("id")
+    @Expose
+    private String id;
 }

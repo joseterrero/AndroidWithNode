@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,9 +22,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@id/textViewTitle"
-        app:layout_constraintStart_toStartOf="@id/textViewTitle"
-        app:layout_constraintTop_toTopOf="@id/textViewTitle" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewTitle"
+        app:layout_constraintStart_toStartOf="@+id/textViewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
     <TextView
         android:id="@+id/textViewBody"
@@ -32,9 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@id/textViewCreatedAt"
-        app:layout_constraintStart_toEndOf="@id/textViewCreatedAt"
-        app:layout_constraintTop_toTopOf="@id/textViewCreatedAt" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewCreatedAt"
+        app:layout_constraintStart_toStartOf="@+id/textViewCreatedAt"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCreatedAt" />
 
     <TextView
         android:id="@+id/textViewCreatedBy"
@@ -42,9 +42,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@id/textViewBody"
-        app:layout_constraintStart_toEndOf="@id/textViewBody"
-        app:layout_constraintTop_toTopOf="@id/textViewBody" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewBody"
+        app:layout_constraintStart_toStartOf="@+id/textViewBody"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBody" />
 
     <TextView
         android:id="@+id/textViewRealizedBy"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@id/textViewCreatedBy"
-        app:layout_constraintStart_toEndOf="@id/textViewCreatedBy"
-        app:layout_constraintTop_toTopOf="@id/textViewCreatedBy" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewCreatedBy"
+        app:layout_constraintStart_toStartOf="@+id/textViewCreatedBy"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCreatedBy" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,6 @@
 package com.joseterrero.basicloginapp;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,30 +11,29 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.joseterrero.basicloginapp.common.SharedPreferencesUI;
 import com.joseterrero.basicloginapp.model.TareaResponse;
-import com.joseterrero.basicloginapp.retrofit.generator.ServiceGenerator;
+import com.joseterrero.basicloginapp.retrofit.generator.AppServiceGenerator;
 import com.joseterrero.basicloginapp.retrofit.services.TaskService;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TareasFragment extends Fragment {
 
+    private static final String ARG_COLUMN_COUNT = "column-count";
+
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private ITareaListener mListener;
     private MyTareasRecyclerViewAdapter adapter;
     private List<TareaResponse> tareasList;
-    private Context ctx;
     private RecyclerView recyclerView;
-    private TaskService service;
-    private SharedPreferencesUI sharedPreferencesUI;
+    TaskService taskService;
+    AppServiceGenerator appServiceGenerator;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -48,6 +46,9 @@ public class TareasFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (getArguments() != null) {
+            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+        }
     }
 
     @Override
@@ -64,63 +65,38 @@ public class TareasFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            tareasList = new ArrayList<>();
-            service = ServiceGenerator.createService(TaskService.class);
-            new getTareas().execute();
+            retrofitInit();
+            loadListTareas();
         }
         return view;
     }
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof ITareaListener) {
-            mListener = (ITareaListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement ITareaListener");
-        }
+    private void retrofitInit() {
+        appServiceGenerator = appServiceGenerator.getInstance();
+        taskService = appServiceGenerator.getTaskService();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+    private void loadListTareas() {
+        Call<List<TareaResponse>> call = taskService.getTasks();
 
-    private class getTareas extends AsyncTask<Void, Void, List<TareaResponse>> {
-
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
-        protected List<TareaResponse> doInBackground(Void... voids) {
-            Call<List<TareaResponse>> call = service.getTasks();
-
-            Response<List<TareaResponse>> response = null;
-            try {
-                response = call.execute();
-            } catch (IOException e) {
-                e.printStackTrace();
+        call.enqueue(new Callback<List<TareaResponse>>() {
+            @Override
+            public void onResponse(Call<List<TareaResponse>> call, Response<List<TareaResponse>> response) {
+                if (response.isSuccessful()) {
+                    tareasList = response.body();
+                    adapter = new MyTareasRecyclerViewAdapter(
+                            tareasList, getActivity()
+                    );
+                    recyclerView.setAdapter(adapter);
+                    //adapter.notifyDataSetChanged();
+                } else
+                    Toast.makeText(getActivity(),"Hubo un error",Toast.LENGTH_SHORT).show();
             }
 
-            if (response.isSuccessful())
-                tareasList = response.body();
-
-            return tareasList;
-        }
-
-        @Override
-        protected void onPostExecute(List<TareaResponse> tareaResponses) {
-            super.onPostExecute(tareaResponses);
-
-            adapter = new MyTareasRecyclerViewAdapter(
-                    tareaResponses, ctx, R.layout.fragment_tareas, mListener
-            );
-            recyclerView.setAdapter(adapter);
-        }
+            @Override
+            public void onFailure(Call<List<TareaResponse>> call, Throwable t) {
+                Toast.makeText(getActivity(), "Hubo un problema de conexión", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

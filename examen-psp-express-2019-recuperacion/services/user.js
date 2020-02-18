@@ -55,7 +55,7 @@ let service = {
     },
     findById: (id) => {
         let result =  _.find(users, u => u.id == id);
-        delete result.password;
+        //delete result.password;
         return result;
     },
     findByRol: (rol) => {

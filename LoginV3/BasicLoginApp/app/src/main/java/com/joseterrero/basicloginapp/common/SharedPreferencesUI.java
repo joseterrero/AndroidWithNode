@@ -5,29 +5,32 @@ import android.content.SharedPreferences;
 
 public class SharedPreferencesUI {
 
-    public static Context context;
     private static final String APP_SETTINGS_FILE = "APP_SETTINGS";
 
-
-    public SharedPreferencesUI(Context context) {
-        this.context = context;
-    }
-
-    public SharedPreferencesUI() {
-    }
+    public SharedPreferencesUI(){}
 
     private static SharedPreferences getSharedPreferences(){
-        return context.getSharedPreferences(APP_SETTINGS_FILE, Context.MODE_PRIVATE);
+        return MyApp.getContext()
+                .getSharedPreferences(APP_SETTINGS_FILE, Context.MODE_PRIVATE);
     }
 
-    public static void setSomeStringValue(String dataLabel, String dataValue){
+    public static void setStringValue(String dataLabel,String dataValue){
         SharedPreferences.Editor editor = getSharedPreferences().edit();
-        editor.putString(dataLabel, dataValue);
+        editor.putString(dataLabel,dataValue);
         editor.commit();
     }
 
-    public static String getSomeStringValue(String dataLabel) {
+    public static String getStringValue(String dataLabel){
+        return getSharedPreferences().getString(dataLabel,null);
+    }
 
-        return getSharedPreferences().getString(dataLabel, null);
+    public static void setIntegerValue(String dataLabel,Integer dataValue){
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.putInt(dataLabel,dataValue);
+        editor.commit();
+    }
+
+    public static Integer getIntegerValue(String dataLabel){
+        return getSharedPreferences().getInt(dataLabel,0);
     }
 }
