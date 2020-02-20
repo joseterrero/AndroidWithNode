@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     Uri uriSelected;
     Button btnUpload;
     String fileName;
-    MultipartBody.Part body;
+    int nameIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,6 @@ public class RegisterActivity extends AppCompatActivity {
         retrofitInit();
         findViews();
         events();
-
     }
 
     private void retrofitInit() {
@@ -100,15 +99,14 @@ public class RegisterActivity extends AppCompatActivity {
                                         MediaType.parse(getContentResolver().getType(uriSelected)), baos.toByteArray());
 
                         Cursor cursor = getContentResolver().query(uriSelected, null, null, null, null);
-                        if (cursor != null && cursor.moveToFirst()) {
-                            int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                        if( cursor != null && cursor.moveToFirst() ){
+                            nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
                             fileName = cursor.getString(nameIndex);
                             cursor.close();
-                            body =
-                                    MultipartBody.Part.createFormData("avatar", "avatar"+fileName, requestFile);
                         }
 
-
+                        MultipartBody.Part body =
+                                    MultipartBody.Part.createFormData("avatar", fileName, requestFile);
 
                         RequestBody email = RequestBody.create(MultipartBody.FORM, etEmail.getText().toString());
                         RequestBody username = RequestBody.create(MultipartBody.FORM, etUsername.getText().toString());
