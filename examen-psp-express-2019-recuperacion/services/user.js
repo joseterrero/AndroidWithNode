@@ -56,19 +56,43 @@ let service = {
     findById: (id) => {
         let result =  _.find(users, u => u.id == id);
         //delete result.password;
-        return result;
+        return {
+            id: result.id,
+            username: result.username,
+            email: result.email,
+            fullname: result.fullname,
+            roles: result.roles
+        };
     },
     findByRol: (rol) => {
-        return _.filter(users, u => _.includes(u.roles, rol));
+        let list =  _.filter(users, u => _.includes(u.roles, rol));
+        return list.map((result) => { return {
+            id: result.id,
+            username: result.username,
+            email: result.email,
+            fullname: result.fullname,
+            roles: result.roles,
+            avatar: result.avatar
+        }});
     },
     insertUser : (user) => {
         users.push({
             id: users.length+1,
             email: user.email,
             username: user.username,
-            password: user.password
+            password: user.password,
+            roles: ["USER"],
+            avatar: user.avatar
         });
-        return users[users.length-1];
+        let result =  users[users.length-1];
+        return {
+            id: result.id,
+            username: result.username,
+            email: result.email,
+            fullname: result.fullname,
+            roles: result.roles,
+            avatar: result.avatar
+        }
     }
 }
 

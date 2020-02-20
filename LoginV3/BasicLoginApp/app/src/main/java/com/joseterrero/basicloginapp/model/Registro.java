@@ -24,4 +24,7 @@ public class Registro {
     @SerializedName("password2")
     @Expose
     private String password2;
+    @SerializedName("avatar")
+    @Expose
+    private String avatar;
 }

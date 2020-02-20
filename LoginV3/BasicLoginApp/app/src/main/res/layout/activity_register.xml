@@ -58,11 +58,11 @@
         android:id="@+id/buttonRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="@string/text_register"
-        app:layout_constraintEnd_toEndOf="@+id/editTextPassRegister2"
-        app:layout_constraintStart_toStartOf="@+id/editTextPassRegister2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassRegister2" />
+        app:layout_constraintEnd_toEndOf="@+id/buttonFichero"
+        app:layout_constraintStart_toStartOf="@+id/imageViewFoto"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFoto" />
 
     <TextView
         android:id="@+id/textViewLogin"
@@ -75,4 +75,22 @@
         app:layout_constraintEnd_toEndOf="@+id/buttonRegister"
         app:layout_constraintStart_toStartOf="@+id/buttonRegister"
         app:layout_constraintTop_toBottomOf="@+id/buttonRegister" />
+
+    <Button
+        android:id="@+id/buttonFichero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/text_fichero"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPassRegister2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassRegister2" />
+
+    <ImageView
+        android:id="@+id/imageViewFoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/buttonFichero"
+        app:layout_constraintStart_toStartOf="@+id/editTextPassRegister2"
+        app:layout_constraintTop_toTopOf="@+id/buttonFichero"
+        app:srcCompat="@mipmap/ic_launcher" />
 </androidx.constraintlayout.widget.ConstraintLayout>

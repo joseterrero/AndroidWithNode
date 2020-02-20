@@ -16,7 +16,4 @@ public interface TaskService {
 
     @POST("tasks/")
     Call<TareaResponse> addTask(@Body AddTarea addTarea);
-
-    @GET("avatar/:img")
-    Call<TareaResponse> uploadImage();
 }

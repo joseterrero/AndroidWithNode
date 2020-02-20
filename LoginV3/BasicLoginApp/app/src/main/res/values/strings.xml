@@ -10,4 +10,5 @@
     <string name="title_newtask">Crear nueva tarea</string>
     <string name="hint_description">Descripción</string>
     <string name="hint_task_title">Titulo</string>
+    <string name="text_fichero">Subir imagen</string>
 </resources>

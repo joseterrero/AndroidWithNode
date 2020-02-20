@@ -21,9 +21,11 @@ let controller = {
             let inserted = UserService.insertUser({
                 email: req.body.email,
                 username: req.body.username,
-                password: hash
+                password: hash,
+                password2: hash,
+                avatar: req.file.filename
             })
-            res.json(inserted)
+            res.status(201).json(inserted)
         }
     }
     ,
